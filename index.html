@@ -90,16 +90,22 @@ function onloadFcn(){
   }
 
     // called when a message arrives
+	y=0;
   function led() {
-    boarId=document.getElementById("boarId").value;
-	userIdId=document.getElementById("userId").value;
-	
-    sendMessage(userId+boarId+':led_state:0')
+	  if(y==0){
+		  document.getElementById("led_state").innerHTML = "ON";
+		  sendMessage('led=1')
+		  y=1;}
+	  else{
+		  y=0;
+		  sendMessage('led=0')
+		  document.getElementById("led_state").innerHTML= "OFF";
+	console.log("Resiviste:"+message.payloadString);
   }
   // called when a message arrives
   myName='leo'
   led_state=true
-  function doAction(msg) {
+  function action(msg) {
     n=msg.split(":")[0];
 	f=msg.split(":")[1];
 	v=msg.split(":")[2]
