@@ -4,9 +4,11 @@
 	    <title>MQTT JavaScript Client Example</title>
 	    <!-- Latest compiled and minified CSS - add here as needed -->
 	</head>
-	<body>
+	<body onload='onloadFcn()'>
 	    <!-- HTML to display MQTT topic values ------------------------------------------------->
 		<div><strong>IOT Server</strong></div><br>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.js" type="text/javascript"></script>
+		<script src="script.js"></script>
 		<textarea style="resize:none; border: none" readonly rows="1" cols="10">User Id</textarea>
 		<textarea style="resize:none; border: none" readonly rows="1" cols="10">Board Id</textarea><br/>
 		<textarea style="resize:none" id='userId' rows="1" cols="10">User</textarea>
@@ -16,7 +18,7 @@
 		<h1>sensor</h1>
 		<h1 id="sensor_val">0</h1>
 		<!-- mosquitto MQTT -------------------------------------------------------------------->
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.js" type="text/javascript"></script>
+		
 		<!-- jQuery ---------------------------------------------------------------------------->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 
@@ -26,6 +28,10 @@
 
   // Create a client instance
   //client = new Paho.MQTT.Client("postman.cloudmqtt.com", 14970);
+var etiqueta;
+function onloadFcn(){
+  etiqueta= document.getElementById("led");
+  etiqueta.innerHTML  = "LED1"
   
   client = new Paho.MQTT.Client("postman.cloudmqtt.com", 31098, "web_" + parseInt(Math.random() * 100, 10));
 
@@ -42,15 +48,16 @@
 
   // connect the client
   client.connect(options);
+  topic='led';
    
   // called when the client connects
   function onConnect() {
     // Once a connection has been made, make a subscription and send a message.
     console.log("onConnect");
 	
-    client.subscribe("/cloudmqtt");
+    client.subscribe("test");
     message = new Paho.MQTT.Message("ll:Hello: CloudMQTT");
-    message.destinationName = "/cloudmqtt";
+    message.destinationName = topic;
     
 	
   }
@@ -70,13 +77,13 @@
   // called when a message arrives
   function onMessageArrived(message) {
     console.log("onMessageArrived:"+message.payloadString);
-	doAction(message.payloadString);
+	action(message.payloadString);
   }
   
     // called when a message arrives
   function sendMessage(msg) {
     message = new Paho.MQTT.Message(msg);
-    message.destinationName = "/cloudmqtt";
+    message.destinationName = topic;
     client.send(message);
 	
   }
@@ -113,7 +120,7 @@
 		}
 	   }
 	 }
-  
+ }  
 </script>
 	</body>
 </html>
