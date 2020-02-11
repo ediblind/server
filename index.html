@@ -105,19 +105,7 @@ function onloadFcn(){
 		  sendMessage('led=0')
 		  document.getElementById("led_state").innerHTML= "OFF";
 	}
-	 k=0;
-   function led2() {
-	  if(k==0){
-		  document.getElementById("led_state2").innerHTML = "ON";
-		  sendMessage('led=1')
-		  k=1;}
-	  else{
-		  k=0;
-		  sendMessage('led=0')
-		  document.getElementById("led_state2").innerHTML= "OFF";
-	}
-	  console.log("Resiviste:"+message.payloadString);
-  }
+	 
   // called when a message arrives
   myName='leo'
   led_state=true
@@ -132,10 +120,6 @@ function onloadFcn(){
 		  case 'led_state':
 			led_state=v;
 			document.getElementById("led_state").innerHTML=led_state;
-			break;
-		  case 'led_state2':
-			led_state2=v;
-			document.getElementById("led_state2").innerHTML=led_state2;
 			break;
 		  case 'sensor_val':
 			sensor_val=v;
