@@ -1,7 +1,7 @@
 //alert('hola');
 var etiqueta;
 function onloadFcn(){
-etiqueta= document.getElementById("led");
+etiqueta= document.getElementById("LUCES");
 etiqueta.innerHTML = "LUCES";
 }
 //onload indica q realizeoperacion todo cuando ya esten todas las etiquetas cargadas//
